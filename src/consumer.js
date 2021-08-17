@@ -9,7 +9,11 @@ const init = async () => {
     const mailSender = new MailSender();
     const listener = new Listener(notesService, mailSender);
 
+    console.log('connecting');
+
     const connection = await amqp.connect(process.env.RABBITMQ_SERVER);
+
+    console.log('after connect');
     const channel = await connection.createChannel();
     await channel.assertQueue('export:notes', {
         durable: true,
